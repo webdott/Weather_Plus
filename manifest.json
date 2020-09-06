@@ -1,16 +1,41 @@
 {
-    "name": "Weather Cast",
-    "shortname": "Weather Cast",
-    "start_url": ".",
+    "name": "WeatherPlus App",
+    "short_name": "WeatherPlus",
+    "start_url": "/index.html",
     "display": "standalone",
     "orientation": "portrait",
-    "background_color": "#ccc",
-    "theme_color": "#5FAAE5",
+    "background_color": "#cf0bd6",
+    "theme_color": "#7127c0",
     "icons": [
         {
-            "src": "",
-            "sizes": "",
-            "type": "image/svg"
+            "src": "/images/icons8-stormy-weather-48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/icons8-stormy-weather-72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/icons8-stormy-weather-96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/icons8-stormy-weather-144.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/icons8-stormy-weather-256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/icons8-stormy-weather-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
         }
     ]
 }
