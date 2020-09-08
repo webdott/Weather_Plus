@@ -1,7 +1,7 @@
 {
     "name": "WeatherPlus",
     "short_name": "WeatherPlus",
-    "start_url": "/",
+    "start_url": "index.html",
     "orientation": "portrait",
     "icons": [
         {
