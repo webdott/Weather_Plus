@@ -98,9 +98,9 @@
             
     </main>
 
-    <script defer src="/scripts/index.js"></script>
+    <script async src="/scripts/index.js"></script>
     <script>
-        // CODELAB: Register service worker.
+        // Register service worker.
         if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/service-worker.js')
