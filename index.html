@@ -13,12 +13,12 @@
     <link rel="manifest" href="manifest.json">
 
     <!-- ios Support -->
-    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-48.png">
-    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-72.png">
-    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-96.png">
-    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-128.png">
-    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-256.png">
-    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-512.png">
+    <link rel="apple-touch-icon" href="images/icons8-stormy-weather-48.png">
+    <link rel="apple-touch-icon" href="images/icons8-stormy-weather-72.png">
+    <link rel="apple-touch-icon" href="images/icons8-stormy-weather-96.png">
+    <link rel="apple-touch-icon" href="images/icons8-stormy-weather-128.png">
+    <link rel="apple-touch-icon" href="images/icons8-stormy-weather-256.png">
+    <link rel="apple-touch-icon" href="images/icons8-stormy-weather-512.png">
 
     <meta name="apple-mobile-web-app-status-bar" content="#7127c0" />
 
@@ -38,10 +38,10 @@
     >
 
     <!-- //Weather Icons CSS -->
-    <link rel="stylesheet" href="/css/weather-icons.min.css">
+    <link rel="stylesheet" href="css/weather-icons.min.css">
     
     <!-- //Custom CSS -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 
     <title>WeatherPlus - GADS Practice Project</title>
@@ -100,12 +100,12 @@
         <button class="install__button"  aria-label="install" hidden>install</button>
     </main>
 
-    <script src="/scripts/index.js"></script>
+    <script src="scripts/index.js"></script>
     <script>
         // Register service worker.
         if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js')
+            navigator.serviceWorker.register('service-worker.js')
                 .then((reg) => {
                 console.log('Service worker registered.', reg);
                 });
