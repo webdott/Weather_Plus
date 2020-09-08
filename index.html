@@ -12,11 +12,30 @@
     <!-- Manifest -->
     <link rel="manifest" href="./manifest.json">
 
+    <!-- ios Support -->
+    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-48.png">
+    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-72.png">
+    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-96.png">
+    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-128.png">
+    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-256.png">
+    <link rel="apple-touch-icon" href="/images/icons8-stormy-weather-512.png">
+
+    <meta name="apple-mobile-web-app-status-bar" content="#7127c0" />
+
     <!-- font Awesome CDN -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    <link rel="stylesheet" 
+        href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" 
+        integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" 
+        crossorigin="anonymous" 
+        media="print"
+    >
 
     <!-- Google Fonts CDN -->
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link 
+        href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" 
+        rel="stylesheet"
+        media="print"
+    >
 
     <!-- //Weather Icons CSS -->
     <link rel="stylesheet" href="./css/weather-icons.min.css">
@@ -25,7 +44,7 @@
     <link rel="stylesheet" href="./css/style.css">
 
 
-    <title>Weather Cast - GADS Practice Project</title>
+    <title>WeatherPlus - GADS Practice Project</title>
 </head>
 <body>
 
@@ -36,6 +55,7 @@
                 <i class='wi wi-day-thunderstorm'></i>
                 <span>Weather+</span>
             </h3>
+            <label for="search" aria-label="search city"></label>
             <input id='search' class="weather__search" name="search" type="search" placeholder="Search City" >
         </section>
     </nav>
@@ -55,8 +75,19 @@
 
             <section class="weather__details">
                 <p>Welcome to Weather+ 😊, Please input a location for weather search</p> 
-                <!-- <a target="_blank" href="https://icons8.com/icons/set/chance-of-storm">Stormy Weather icon</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>  -->
-                <!-- Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
+
+                <p>powered By</p>
+                
+                <ul>
+                    <li>
+                        <a target="_blank" href="https://icons8.com/icons/set/chance-of-storm" rel="noreferrer">Stormy Weather icon</a> icon by <a target="_blank" href="https://icons8.com" rel="noreferrer">Icons8</a> 
+                    </li>
+                    <li>
+                        Icons made by <a href="https://www.flaticon.com/authors/freepik" rel="noreferrer" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" rel="noreferrer"  title="Flaticon"> www.flaticon.com</a>
+                    </li>
+                </ul>
+
+                <p>Made with 💓 by <a href="https://github.com/Caspero-62" rel="noreferrer">Webdot</a></p>
             </section>
         </div>
 
@@ -67,6 +98,18 @@
             
     </main>
 
-    <script src="index.js"></script>
+    <script defer src="/scripts/index.js"></script>
+    <script>
+        // CODELAB: Register service worker.
+        if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((reg) => {
+                console.log('Service worker registered.', reg);
+                });
+        });
+        }
+    </script>
+    <!-- <script defer src="/scripts/install.js"></script> -->
 </body>
 </html>

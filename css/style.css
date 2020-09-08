@@ -8,6 +8,16 @@ body {
     font-family: 'Permanent Marker', cursive;
 }
 
+a{
+    text-decoration: none;
+    color: #7127c0;
+    font-weight: bold;
+}
+
+a:hover{
+    text-decoration: none;
+    color: #7127c0;
+}
 
 .city__name{
     color: #15c285;

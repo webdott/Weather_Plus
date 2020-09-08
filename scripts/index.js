@@ -24,7 +24,7 @@ const weatherForecast = async(coord) => {
     try{
         const responseCoord = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=hourly,minutely,current&APPID=14bc53e6922ea2590b89900c74db5df3&units=metric`);
         const weatherFromCoord = await responseCoord.json();
-        console.log(weatherFromCoord);
+        
         const {daily} = weatherFromCoord;
         daily.filter((date, idx) => idx > 0)
         .map(date => {
@@ -73,9 +73,9 @@ const weatherQuery = async() => {
 
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.value}&APPID=14bc53e6922ea2590b89900c74db5df3&units=metric`);
         const weatherReport = await response.json();
-        console.log(weatherReport);
+        
         const {name, coord, sys, weather, main, id, dt, visibility, wind} = weatherReport;
-        console.log(sys, weather, main, id, dt, visibility, wind);
+        
 
         switch(true) {
             case weatherReport.cod==='404':
@@ -101,6 +101,8 @@ const weatherQuery = async() => {
 
                 // getDateFromTimeStamp(dt, day, month, dateNumber, year);
 
+
+                //modify weatherPreview with API content
                 weatherPreview.style.display = 'block';
 
                 weatherPreview.innerHTML = `
@@ -116,6 +118,8 @@ const weatherQuery = async() => {
                     </div>
                 `;
         
+
+                //modify weatherDescription with API content
                 weatherDescription.style.display = 'block';
         
                 weatherDescription.innerHTML = `
@@ -133,6 +137,7 @@ const weatherQuery = async() => {
                     </div>
                 `;
                 
+                //modify weatherDetails with API content
                 weatherDetails.style.display = 'block'
         
                 weatherDetails.innerHTML= `
