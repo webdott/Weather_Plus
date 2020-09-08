@@ -2,15 +2,15 @@ const CACHE_NAME = 'static-cache-v1';
 
 //Add list of files to cache here.
 const FILES_TO_CACHE = [
-    '/',
-    '/css/style.css',
-    '/css/weather-icons.min.css',
-    '/images/weather-cast-bg.jpg',
-    '/images/android-chrome-192x192.png',
-    '/images/android-chrome-512x512.png',
-    '/images/favicon-32x32.png',
-    '/images/favicon-16x16.png',
-    '/images/mstile-150x150.png',
+    'index.html',
+    'css/style.css',
+    'css/weather-icons.min.css',
+    'images/weather-cast-bg.jpg',
+    'images/android-chrome-192x192.png',
+    'images/android-chrome-512x512.png',
+    'images/favicon-32x32.png',
+    'images/favicon-16x16.png',
+    'images/mstile-150x150.png',
 
 ];
 
