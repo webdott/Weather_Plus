@@ -40,7 +40,7 @@ const weatherForecast = async(coord) => {
             card.innerHTML = `
                 <p class="day">${days[time.getDay()]}</p>
                 <div class="weather__preview__card">
-                        <img src="http://openweathermap.org/img/wn/${date.weather[0].icon}@2x.png">
+                        <img src="https://openweathermap.org/img/wn/${date.weather[0].icon}@2x.png">
                         <p>${Math.round(date.temp.day)}<sup>o</sup>C</p>
                 </div>
             `;
@@ -129,7 +129,7 @@ const weatherQuery = async() => {
                             <p class="max__min__temp">${Math.round(main['temp_max'])}<sup>o</sup>C/${Math.round(main['temp_min'])}<sup>o</sup>C</p>
                         </div>
                         <figure>
-                            <img class="weather__description__image"  src="http://openweathermap.org/img/wn/${weather[0].icon}@2x.png" height="150" width="150">
+                            <img class="weather__description__image"  src="https://openweathermap.org/img/wn/${weather[0].icon}@2x.png" height="150" width="150">
                             <figcaption>
                                 <p class="weather__description__text">${weather[0].description}</p>
                             </figcaption>
