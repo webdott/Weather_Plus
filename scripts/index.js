@@ -201,7 +201,15 @@ const weatherQuery = async(lat, lon) => {
     }
 }
 
-search.addEventListener('search', weatherQuery);
+search.addEventListener('keypress', (e) => {
+    if (e.keyCode === 13) {
+        weatherQuery();
+    }
+});
+
+let searchIcon = document.querySelector('.search__icon');
+
+searchIcon.addEventListener('click', weatherQuery);
 
 
 //====================Weather From User Location==============/

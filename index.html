@@ -29,10 +29,10 @@
     <meta name="apple-mobile-web-app-status-bar" content="#7127c0" />
 
     <!-- font Awesome CDN -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" media="print">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
     <!-- Google Fonts CDN -->
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Poppins:wght@600&family=Roboto:wght@700&display=swap" rel="stylesheet">
 
     <!-- //Weather Icons CSS -->
     <link rel="stylesheet" href="css/weather-icons.min.css">
@@ -45,48 +45,53 @@
 </head>
 <body>
 
-    <nav>
-        <!-- Search Location Section -->
-        <section class="weather__location__search">
-            <h3 class="logo"> 
-                <i class='wi wi-day-thunderstorm'></i>
-                <span>Weather+</span>
-            </h3>
-            <label for="search" aria-label="search city"></label>
-            <input id='search' class="weather__search" name="search" type="search" placeholder="Search City" >
-        </section>
-    </nav>
-    
-    <main>
+    <div class="overlay">
+        <nav>
+            <!-- Search Location Section -->
+            <section class="weather__location__search">
+                <h3 class="logo"> 
+                    <i class='wi wi-day-thunderstorm'></i>
+                    <span>Weather+</span>
+                </h3>
+                <div class="search__container">
+                    <label for="search" aria-label="search city"></label>
+                    <input id='search' class="weather__search" name="search" type="search" placeholder="Search City" >
+                    <i class="fas fa-search-location search__icon"></i>
+                </div>
+            </section>
+        </nav>
         
-        <!-- Weather Preview Section (City, Country and Date information) -->
-        <section class="weather__preview">
+        <main>
             
-        </section>
-
-        <!-- Weather information -->
-        <div class="weather__today">
-            <section class="weather__description">
-            
+            <!-- Weather Preview Section (City, Country and Date information) -->
+            <section class="weather__preview">
+                
             </section>
-
-            <section class="weather__details">
-                <p>Welcome to Weather+ 😊, Please input a location for weather search</p> 
-
-                <p id="location">You can search for your current location weather <a>here</a> </p>
-
-                <p>Made with 💓 by <a href="https://github.com/Caspero-62" rel="noreferrer">Webdot</a></p>
+    
+            <!-- Weather information -->
+            <div class="weather__today">
+                <section class="weather__description">
+                
+                </section>
+    
+                <section class="weather__details">
+                    <p>Welcome to Weather+ 😊, Please input a location for weather search</p> 
+    
+                    <p id="location">You can search for your current location weather <a>here</a> </p>
+    
+                    <p>Made with 💓 by <a href="https://github.com/Caspero-62" rel="noreferrer">Webdot</a></p>
+                </section>
+            </div>
+    
+            <!-- Weekly weather Forecast -->
+            <section class="future__weather__forecast">
+                   
             </section>
-        </div>
-
-        <!-- Weekly weather Forecast -->
-        <section class="future__weather__forecast">
-               
-        </section>
-            
-
-        <button class="install__button"  aria-label="install" hidden>install</button>
-    </main>
+                
+    
+            <button class="install__button"  aria-label="install" hidden>install</button>
+        </main>
+    </div>
 
     <script src="scripts/index.js"></script>
     <script>
