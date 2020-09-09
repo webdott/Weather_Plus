@@ -91,7 +91,7 @@ figcaption p{
 
 /* Section Styles */
 body{
-    background-image: url('../images/weather-cast-bg.jpg');
+    background-image: url('../images/weatherPlus.jpg');
     background-attachment: fixed;
     background-position: center bottom; 
     background-repeat: no-repeat;
