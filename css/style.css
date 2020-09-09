@@ -21,7 +21,7 @@ a:hover{
 }
 
 .city__name{
-    color: #15c285;
+    color: #7127c0;
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 0;
@@ -34,6 +34,7 @@ a:hover{
     border-radius: 30px;
     background-color: #7127c0;
     font-size: 0.3em;
+    color: #ffffff;
 }
 
 .date{
@@ -42,14 +43,14 @@ a:hover{
 }
 
 .temp{
-    color: #15c285;
+    color: #7127c0;
     font-size: 3.2rem;
     font-weight: bold;
     margin-bottom: 0;
 }
 
 .max__min__temp{
-    color: #15c285;
+    color: #7127c0;
     text-align: center;
 }
 
