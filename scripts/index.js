@@ -16,6 +16,7 @@
 //     return(day, month, dateNumber, year);
 // }
 
+//====================Weather Forecast from Coordinates==============//
 const weatherForecast = async(coord) => {
 
     let futureWeatherForecast = document.querySelector('.future__weather__forecast');
@@ -40,7 +41,7 @@ const weatherForecast = async(coord) => {
             card.innerHTML = `
                 <p class="day">${days[time.getDay()]}</p>
                 <div class="weather__preview__card">
-                        <img src="https://openweathermap.org/img/wn/${date.weather[0].icon}@2x.png">
+                        <img src="https://openweathermap.org/img/wn/${date.weather[0].icon}@2x.png" alt="weather-icon">
                         <p>${Math.round(date.temp.day)}<sup>o</sup>C</p>
                 </div>
             `;
@@ -55,7 +56,9 @@ const weatherForecast = async(coord) => {
     }
 }
 
-const weatherQuery = async() => {
+
+//====================Weather Query from Search Value==============//
+const weatherQuery = async(lat, lon) => {
     let search = document.querySelector('#search');
 
     let weatherPreview = document.querySelector('.weather__preview');
@@ -64,14 +67,22 @@ const weatherQuery = async() => {
 
     let weatherDescription = document.querySelector('.weather__description');
 
+    let futureWeatherForecast = document.querySelector('.future__weather__forecast');
+    
     //clear all content
     weatherDetails.innerHTML = '';
     weatherDescription.innerHTML = '';
     weatherPreview.innerHTML = '';
+    futureWeatherForecast.innerHTML = '';
+
+    let response
 
     try {
-
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.value}&APPID=14bc53e6922ea2590b89900c74db5df3&units=metric`);
+        if (lat && lon) {
+            response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=14bc53e6922ea2590b89900c74db5df3&units=metric`);
+        } else {
+            response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.value}&APPID=14bc53e6922ea2590b89900c74db5df3&units=metric`);
+        }
         const weatherReport = await response.json();
         
         const {name, coord, sys, weather, main, id, dt, visibility, wind} = weatherReport;
@@ -129,7 +140,7 @@ const weatherQuery = async() => {
                             <p class="max__min__temp">${Math.round(main['temp_max'])}<sup>o</sup>C/${Math.round(main['temp_min'])}<sup>o</sup>C</p>
                         </div>
                         <figure>
-                            <img class="weather__description__image"  src="https://openweathermap.org/img/wn/${weather[0].icon}@2x.png" height="150" width="150">
+                            <img class="weather__description__image"  src="https://openweathermap.org/img/wn/${weather[0].icon}@2x.png" alt="${weather[0].description}icon" height="150" width="150">
                             <figcaption>
                                 <p class="weather__description__text">${weather[0].description}</p>
                             </figcaption>
@@ -180,7 +191,6 @@ const weatherQuery = async() => {
                 `;
 
                 search.value = '';
-                search.reset();
         }
 
         
@@ -192,3 +202,22 @@ const weatherQuery = async() => {
 }
 
 search.addEventListener('search', weatherQuery);
+
+
+//====================Weather From User Location==============/
+let useLocation = document.querySelector('#location');
+
+useLocation.addEventListener('click', () => {
+    let lon;
+    let lat;
+
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition( (position) => {
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+
+            weatherQuery(lat, lon);
+        });
+    }
+});
+

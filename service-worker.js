@@ -2,10 +2,11 @@ const CACHE_NAME = 'static-cache-v1';
 
 //Add list of files to cache here.
 const FILES_TO_CACHE = [
+    '/',
     'index.html',
     'css/style.css',
     'css/weather-icons.min.css',
-    'images/weather-cast-bg.jpg',
+    'images/weatherPlus.jpg',
     'images/android-chrome-192x192.png',
     'images/android-chrome-512x512.png',
     'images/favicon-32x32.png',
@@ -50,11 +51,15 @@ self.addEventListener('fetch', (evt) => {
         return;
     }
     evt.respondWith(
-        fetch(evt.request)
-            .catch(async () => {
-                const cache = await caches.open(CACHE_NAME);
-                return caches.match('index.html');
-            })
+        // fetch(evt.request)
+        //     .catch(async () => {
+        //         const cache = await caches.open(CACHE_NAME);
+        //         return caches.match('index.html');
+        //     })
+
+        caches.match(evt.request).then((response) => {
+            return response || fetch(evt.request);
+        })
     );
 });
 
