@@ -77,8 +77,10 @@ const weatherQuery = async(lat, lon) => {
 
         switch(true) {
             case weatherReport.cod==='404':
-                weatherDetails.style.display = 'block'
+		weatherDescription.style.display = 'none';
+                weatherDetails.style.display = 'block';
                 weatherDetails.innerHTML = "Please search for a valid city 😩";
+		spinner.style.display = 'none';
                 break;
             default:
                 weatherForecast(coord);
