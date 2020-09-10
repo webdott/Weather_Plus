@@ -1,24 +1,7 @@
-// const getDateFromTimeStamp = (timeStamp, day, month, dateNumber, year) => {
-
-//     // Create a new JavaScript Date object based on the timestamp
-//     // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-//     let date = new Date(timeStamp * 1000);
-
-//     let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-//     let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-//     day = days[date.getDay()];
-//     month = months[date.getMonth()];
-//     year = date.getFullYear();
-//     dateNumber = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-
-//     console.log(day, month, dateNumber, year);
-//     return(day, month, dateNumber, year);
-// }
 
 //====================Weather Forecast from Coordinates==============//
 const weatherForecast = async(coord) => {
-
+    let spinner = document.querySelector('.spinner-wrapper');
     let futureWeatherForecast = document.querySelector('.future__weather__forecast');
     futureWeatherForecast.innerHTML = '';
 
@@ -50,6 +33,7 @@ const weatherForecast = async(coord) => {
             futureWeatherForecast.appendChild(card);
             futureWeatherForecast.style.display = 'flex';
 
+            spinner.style.display = 'none';
         })
     } catch (error) {
         console.log(error);
@@ -59,6 +43,8 @@ const weatherForecast = async(coord) => {
 
 //====================Weather Query from Search Value==============//
 const weatherQuery = async(lat, lon) => {
+    let spinner = document.querySelector('.spinner-wrapper');
+
     let search = document.querySelector('#search');
 
     let weatherPreview = document.querySelector('.weather__preview');
@@ -74,6 +60,7 @@ const weatherQuery = async(lat, lon) => {
     weatherDescription.innerHTML = '';
     weatherPreview.innerHTML = '';
     futureWeatherForecast.innerHTML = '';
+    spinner.style.display = 'block';
 
     let response
 
@@ -189,7 +176,7 @@ const weatherQuery = async(lat, lon) => {
                         <p>${visibility}</p>
                     </div>
                 `;
-
+                
                 search.value = '';
         }
 
