@@ -372,7 +372,7 @@ figure{
 
 @media screen and (max-width: 587px) {
     nav {
-        height: 25vh;
+        height: 20vh;
     }
     
     .weather__location__search{
