@@ -153,7 +153,6 @@ main{
 }
 
 .weather__preview {
-    margin-top: auto;
     display: none;
 }
 
