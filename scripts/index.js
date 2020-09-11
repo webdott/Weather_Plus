@@ -1,15 +1,131 @@
+ //==================== DOM Elements =======================//
+ let spinner = document.querySelector('.spinner-wrapper');
 
-//====================Weather Forecast from Coordinates==============//
-const weatherForecast = async(coord) => {
-    let spinner = document.querySelector('.spinner-wrapper');
-    let futureWeatherForecast = document.querySelector('.future__weather__forecast');
-    futureWeatherForecast.innerHTML = '';
+ let search = document.querySelector('#search');
 
-    try{
-        const responseCoord = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=hourly,minutely,current&APPID=14bc53e6922ea2590b89900c74db5df3&units=metric`);
-        const weatherFromCoord = await responseCoord.json();
-        
-        const {daily} = weatherFromCoord;
+ let searchIcon = document.querySelector('.search__icon');
+
+ let weatherPreview = document.querySelector('.weather__preview');
+
+ let weatherDetails = document.querySelector('.weather__details');
+
+ let weatherDescription = document.querySelector('.weather__description');
+
+ let futureWeatherForecast = document.querySelector('.future__weather__forecast');
+
+
+//=============Filling First Data ==========//
+const firstData = (weatherReport, weatherReports) => {
+    let realReport;
+
+    if (weatherReport) {
+       realReport = weatherReport;
+    } else {
+       realReport = weatherReports;
+    }
+
+    const  {name, sys, weather, main, id, dt, visibility, wind} = realReport;
+
+    let day, month, dateNumber, year;
+
+    // Create a new JavaScript Date object based on the timestamp
+    // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+    let date = new Date(dt * 1000);
+
+    let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+    day = days[date.getDay()];
+    month = months[date.getMonth()];
+    year = date.getFullYear();
+    dateNumber = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+
+    // getDateFromTimeStamp(dt, day, month, dateNumber, year);
+
+
+    //modify weatherPreview with API content
+    weatherPreview.style.display = 'block';
+
+    weatherPreview.innerHTML = `
+        <div class="right">
+            <p class="city__name">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>${name}</span>
+                <sup class="country__name">${sys.country}</sup>
+            </p>
+            <div>
+                <p class="date">${day}, ${month} ${dateNumber} ${year}</p>
+            </div>
+        </div>
+    `;
+
+
+    //modify weatherDescription with API content
+    weatherDescription.style.display = 'block';
+
+    weatherDescription.innerHTML = `
+        <div class="left">
+            <div>
+                <p class="temp">${Math.round(main.temp)}<sup>o</sup>C</p>
+                <p class="max__min__temp">${Math.round(main['temp_max'])}<sup>o</sup>C/${Math.round(main['temp_min'])}<sup>o</sup>C</p>
+            </div>
+            <figure>
+                <img class="weather__description__image"  src="https://openweathermap.org/img/wn/${weather[0].icon}@2x.png" alt="${weather[0].description}icon" height="150" width="150">
+                <figcaption>
+                    <p class="weather__description__text">${weather[0].description}</p>
+                </figcaption>
+            </figure>
+        </div>
+    `;
+    
+    //modify weatherDetails with API content
+    weatherDetails.style.display = 'block'
+
+    weatherDetails.innerHTML= `
+        <div class="weather__detail">
+            <p>
+            <i class='wi wi-thermometer'></i>
+                Feels like
+            </p>
+            <p>${Math.round(main['feels_like'])}<sup>o</sup>C</p>
+        </div>
+
+        <div class="weather__detail">
+            <p>
+                <i class='wi wi-humidity'></i>                      
+                Humidity
+            </p>
+            <p>${main['humidity']}%</p>
+        </div>
+
+        <div class="weather__detail">
+            <p>
+            <i class='wi wi-barometer'></i>
+                Pressure
+            </p>
+            <p>${main['pressure']} hPa</p>
+        </div>
+
+        <div class="weather__detail">
+            <p>
+            <i class='wi wi-strong-wind'></i>
+                Wind Speed
+            </p>
+            <p>${wind.speed}m/s</p>
+        </div>
+
+        <div class="weather__detail">
+            <p>Visibility</p>
+            <p>${visibility}</p>
+        </div>
+    `;
+    
+    search.value = '';
+}   
+
+
+const secondData = (weatherFromCoord) => {
+    const {daily} = weatherFromCoord;
         daily.filter((date, idx) => idx > 0)
         .map(date => {
 
@@ -34,7 +150,30 @@ const weatherForecast = async(coord) => {
             futureWeatherForecast.style.display = 'flex';
 
             spinner.style.display = 'none';
-        })
+        });
+}
+
+//====================Weather Forecast from Coordinates==============//
+const weatherForecast = async(coord) => {
+    
+    futureWeatherForecast.innerHTML = '';
+    let weatherFromCoord;
+
+    try{
+        const responseCoord = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=hourly,minutely,current&APPID=14bc53e6922ea2590b89900c74db5df3&units=metric`);
+            
+        weatherFromCoord = await responseCoord.json();
+
+        let localCoordinates = JSON.parse(localStorage.getItem('localCoordinates'));
+
+        localCoordinates = localCoordinates ? localCoordinates : [];
+
+        localCoordinates.push(weatherFromCoord);
+
+        localStorage.setItem('localCoordinates', JSON.stringify(localCoordinates));
+        
+        secondData(weatherFromCoord);
+
     } catch (error) {
         console.log(error);
     }
@@ -43,17 +182,6 @@ const weatherForecast = async(coord) => {
 
 //====================Weather Query from Search Value==============//
 const weatherQuery = async(lat, lon) => {
-    let spinner = document.querySelector('.spinner-wrapper');
-
-    let search = document.querySelector('#search');
-
-    let weatherPreview = document.querySelector('.weather__preview');
-
-    let weatherDetails = document.querySelector('.weather__details');
-
-    let weatherDescription = document.querySelector('.weather__description');
-
-    let futureWeatherForecast = document.querySelector('.future__weather__forecast');
     
     //clear all content
     weatherDetails.innerHTML = '';
@@ -72,114 +200,30 @@ const weatherQuery = async(lat, lon) => {
         }
         const weatherReport = await response.json();
         
-        const {name, coord, sys, weather, main, id, dt, visibility, wind} = weatherReport;
+        const {coord} = weatherReport;
         
 
         switch(true) {
             case weatherReport.cod==='404':
-		weatherDescription.style.display = 'none';
+		        weatherDescription.style.display = 'none';
                 weatherDetails.style.display = 'block';
                 weatherDetails.innerHTML = "Please search for a valid city 😩";
-		spinner.style.display = 'none';
+                spinner.style.display = 'none';
+                search.value = '';
                 break;
             default:
                 weatherForecast(coord);
-
-                let day, month, dateNumber, year;
-
-                // Create a new JavaScript Date object based on the timestamp
-                // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-                let date = new Date(dt * 1000);
-
-                let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-                let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-                day = days[date.getDay()];
-                month = months[date.getMonth()];
-                year = date.getFullYear();
-                dateNumber = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-
-                // getDateFromTimeStamp(dt, day, month, dateNumber, year);
-
-
-                //modify weatherPreview with API content
-                weatherPreview.style.display = 'block';
-
-                weatherPreview.innerHTML = `
-                    <div class="right">
-                        <p class="city__name">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>${name}</span>
-                            <sup class="country__name">${sys.country}</sup>
-                        </p>
-                        <div>
-                            <p class="date">${day}, ${month} ${dateNumber} ${year}</p>
-                        </div>
-                    </div>
-                `;
-        
-
-                //modify weatherDescription with API content
-                weatherDescription.style.display = 'block';
-        
-                weatherDescription.innerHTML = `
-                    <div class="left">
-                        <div>
-                            <p class="temp">${Math.round(main.temp)}<sup>o</sup>C</p>
-                            <p class="max__min__temp">${Math.round(main['temp_max'])}<sup>o</sup>C/${Math.round(main['temp_min'])}<sup>o</sup>C</p>
-                        </div>
-                        <figure>
-                            <img class="weather__description__image"  src="https://openweathermap.org/img/wn/${weather[0].icon}@2x.png" alt="${weather[0].description}icon" height="150" width="150">
-                            <figcaption>
-                                <p class="weather__description__text">${weather[0].description}</p>
-                            </figcaption>
-                        </figure>
-                    </div>
-                `;
                 
-                //modify weatherDetails with API content
-                weatherDetails.style.display = 'block'
-        
-                weatherDetails.innerHTML= `
-                    <div class="weather__detail">
-                        <p>
-                        <i class='wi wi-thermometer'></i>
-                            Feels like
-                        </p>
-                        <p>${Math.round(main['feels_like'])}<sup>o</sup>C</p>
-                    </div>
-        
-                    <div class="weather__detail">
-                        <p>
-                            <i class='wi wi-humidity'></i>                      
-                            Humidity
-                        </p>
-                        <p>${main['humidity']}%</p>
-                    </div>
-        
-                    <div class="weather__detail">
-                        <p>
-                        <i class='wi wi-barometer'></i>
-                            Pressure
-                        </p>
-                        <p>${main['pressure']} hPa</p>
-                    </div>
-        
-                    <div class="weather__detail">
-                        <p>
-                        <i class='wi wi-strong-wind'></i>
-                            Wind Speed
-                        </p>
-                        <p>${wind.speed}m/s</p>
-                    </div>
-        
-                    <div class="weather__detail">
-                        <p>Visibility</p>
-                        <p>${visibility}</p>
-                    </div>
-                `;
-                
-                search.value = '';
+                firstData(weatherReport);
+
+                //Add to local storage array
+                let weatherReports = JSON.parse(localStorage.getItem('weatherReports'));
+
+                weatherReports = weatherReports ? weatherReports : [];
+
+                weatherReports.push(weatherReport);
+
+                localStorage.setItem('weatherReports', JSON.stringify(weatherReports));
         }
 
         
@@ -190,16 +234,42 @@ const weatherQuery = async(lat, lon) => {
     }
 }
 
-search.addEventListener('keypress', (e) => {
-    if (e.keyCode === 13) {
+const searchEvent = () => {
+
+    if(localStorage.getItem('weatherReports') !== null && localStorage.getItem('localCoordinates') !== null) {
+        let localCoordinates = JSON.parse(localStorage.getItem('localCoordinates'));
+
+        let weatherReports = JSON.parse(localStorage.getItem('weatherReports'));
+
+        let  existingReport = weatherReports.filter(report => report.name.toLowerCase() === search.value.toLowerCase());
+
+        let existingCoord;
+
+        if ( existingReport.length === 0) {
+            
+            weatherQuery();
+
+        } else {
+            existingCoord = localCoordinates.filter(coord => coord.lat === existingReport[0].coord.lat);
+
+            firstData(weatherReports = existingReport[0]);
+    
+            secondData(existingCoord[0]);
+        }
+    } else {
         weatherQuery();
     }
+}
+
+
+//=================== Target Search Value =============//
+searchIcon.addEventListener('click', searchEvent);
+
+search.addEventListener('keypress', (e) => {
+    if (e.keyCode === 13) {
+        searchEvent();
+    }
 });
-
-let searchIcon = document.querySelector('.search__icon');
-
-searchIcon.addEventListener('click', weatherQuery);
-
 
 //====================Weather From User Location==============/
 let useLocation = document.querySelector('#location');
@@ -218,3 +288,17 @@ useLocation.addEventListener('click', () => {
     }
 });
 
+
+//====================Get Data from Local Storage=========//
+
+(function getFromLocalStorage(){
+    if(localStorage.getItem('weatherReports') !== null && localStorage.getItem('localCoordinates') !== null) {
+        let localCoordinates = JSON.parse(localStorage.getItem('localCoordinates'));
+
+        let weatherReports = JSON.parse(localStorage.getItem('weatherReports'));
+
+        firstData(weatherReports = weatherReports[weatherReports.length - 1]);
+
+        secondData(localCoordinates[localCoordinates.length - 1]);
+    }
+})();

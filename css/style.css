@@ -1,4 +1,4 @@
-/* Genaral Styles And Typography */
+/*=========== Genaral Styles And Typography====== */
 
 html,
 body {
@@ -63,10 +63,10 @@ figcaption p{
     text-align: center;
 }
 
-/* Genaral Styles And Typography  End*/
+/*=========== Genaral Styles And Typography  End =======*/
 
 
-/* Buttons and CTA's */
+/*========== Buttons and CTA's============ */
 
 .search__icon{
     background-color: #7127c0;
@@ -83,9 +83,9 @@ figcaption p{
     cursor: pointer;
 }
 
-/* Buttons and CTA's End */
+/* ==========Buttons and CTA's End=========== */
 
-/* Section Styles */
+/*============= Section Styles ===========*/
 html{
     background-image: url('../images/weatherPlus.jpg');
     background-attachment: fixed;
@@ -232,7 +232,7 @@ figure{
     justify-content: space-around;
 }
 
-/* Section Styles End*/
+/*============== Section Styles End==========*/
 
 
 /*=========Css Spinner============== */
@@ -340,7 +340,7 @@ figure{
 /*=========Css Spinner============== */
 
 
-/* Media Queries */
+/*========== Media Queries ============*/
 
 @media screen and (max-width: 840px) {
     .temp{
