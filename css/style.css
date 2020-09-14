@@ -109,8 +109,11 @@ nav{
 }
 
 main{
-    display: grid;
-    place-items: center;
+    /* display: grid;
+    place-items: center; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 80vh;
 }
 
@@ -154,6 +157,7 @@ main{
 
 .weather__preview {
     display: none;
+    text-align: center;
 }
 
 .weather__description{
