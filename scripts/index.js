@@ -24,24 +24,31 @@ const firstData = (weatherReport, weatherReports) => {
        realReport = weatherReports;
     }
 
-    const  {name, sys, weather, main, id, dt, visibility, wind} = realReport;
+    const  {name, sys, weather, main, id, dt, visibility, wind, coord} = realReport;
 
-    let day, month, dateNumber, year;
+    let day, month, dateNumber, year, checkDate;
 
     // Create a new JavaScript Date object based on the timestamp
     // multiplied by 1000 so that the argument is in milliseconds, not seconds.
     let date = new Date(dt * 1000);
+    let today = new Date();
+
 
     let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
+    // getDateFromTimeStamp(dt, day, month, dateNumber, year);
     day = days[date.getDay()];
+    checkDay = days[today.getDay()];
     month = months[date.getMonth()];
+    checkMonth = months[today.getMonth()];
     year = date.getFullYear();
+    checkYear = today.getFullYear();
     dateNumber = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
 
-    // getDateFromTimeStamp(dt, day, month, dateNumber, year);
-
+    if ((day !== checkDay) && (month !== checkMonth) && (year !== checkYear)) {
+        weatherQuery(coord.lat, coord.lon);
+    }
 
     //modify weatherPreview with API content
     weatherPreview.style.display = 'block';
@@ -123,34 +130,51 @@ const firstData = (weatherReport, weatherReports) => {
     search.value = '';
 }   
 
-
+//=============Filling Second Data===========//
 const secondData = (weatherFromCoord) => {
+    futureWeatherForecast.innerHTML = '';
     const {daily} = weatherFromCoord;
+    let date1 = new Date(daily[0].dt * 1000);
+    let date2 = new Date();
+    if ((date1.getDay() !== date2.getDay()) && (date1.getMonth() !== date2.getMonth()) && (date1.getFullYear() !== date2.getFullYear())) {
+        null
+    } else {
+
         daily.filter((date, idx) => idx > 0)
         .map(date => {
 
             //get Day from Timestamp
             let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+            // Create a new JavaScript Date object based on the timestamp
+            // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+            let day, month, dateNumber, year, checkDate;
             let time = new Date(date.dt * 1000);
 
+
+            // getDateFromTimeStamp(dt, day, month, dateNumber, year);
+            day = days[time.getDay()];
 
             //create A div with classname of card and set inner content based on data gotten from API call
             let card = document.createElement('div');
             card.classList.add('card');
             card.innerHTML = `
-                <p class="day">${days[time.getDay()]}</p>
+                   <p class="day">${day}</p>
                 <div class="weather__preview__card">
                         <img src="https://openweathermap.org/img/wn/${date.weather[0].icon}@2x.png" alt="weather-icon">
                         <p>${Math.round(date.temp.day)}<sup>o</sup>C</p>
                 </div>
-            `;
+                `;
 
             //append card to futureWeatherForecast and set display to flex
             futureWeatherForecast.appendChild(card);
             futureWeatherForecast.style.display = 'flex';
 
             spinner.style.display = 'none';
+        
         });
+
+    }
 }
 
 //====================Weather Forecast from Coordinates==============//
@@ -175,7 +199,15 @@ const weatherForecast = async(coord) => {
         secondData(weatherFromCoord);
 
     } catch (error) {
-        console.log(error);
+        if (error == 'TypeError: Failed to fetch') {
+            weatherDescription.style.display = 'none';
+            weatherDetails.style.display = 'block';
+            weatherDetails.innerHTML = "Please Check Network Connection 😩";
+            spinner.style.display = 'none';
+            search.value = '';
+        } else {
+            alert(error);
+        }
     }
 }
 
@@ -229,7 +261,15 @@ const weatherQuery = async(lat, lon) => {
         
     } catch (error) {
 
-        console.log(error);
+        if (error == 'TypeError: Failed to fetch') {
+            weatherDescription.style.display = 'none';
+            weatherDetails.style.display = 'block';
+            weatherDetails.innerHTML = "Please Check Network Connection 😩";
+            spinner.style.display = 'none';
+            search.value = '';
+        } else {
+            alert(error);
+        }
 
     }
 }
@@ -252,9 +292,9 @@ const searchEvent = () => {
         } else {
             existingCoord = localCoordinates.filter(coord => coord.lat === existingReport[0].coord.lat);
 
-            firstData(weatherReports = existingReport[0]);
+            firstData(weatherReports = existingReport[existingReport.length - 1]);
     
-            secondData(existingCoord[0]);
+            secondData(existingCoord[existingCoord.length - 1]);
         }
     } else {
         weatherQuery();
