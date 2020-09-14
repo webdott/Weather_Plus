@@ -26,7 +26,7 @@ const firstData = (weatherReport, weatherReports) => {
 
     const  {name, sys, weather, main, id, dt, visibility, wind, coord} = realReport;
 
-    let day, month, dateNumber, year, checkDate;
+    let day, month, dateNumber, year, checkDay, checkMonth, checkYear;
 
     // Create a new JavaScript Date object based on the timestamp
     // multiplied by 1000 so that the argument is in milliseconds, not seconds.
@@ -148,7 +148,7 @@ const secondData = (weatherFromCoord) => {
 
             // Create a new JavaScript Date object based on the timestamp
             // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-            let day, month, dateNumber, year, checkDate;
+            let day, month, dateNumber, year;
             let time = new Date(date.dt * 1000);
 
 
