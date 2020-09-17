@@ -18,6 +18,7 @@ a:hover{
     text-decoration: none;
     color: #7127c0;
     cursor: pointer;
+    background-color: transparent;
 }
 
 .city__name{

@@ -39,95 +39,101 @@ const firstData = (weatherReport, weatherReports) => {
 
     // getDateFromTimeStamp(dt, day, month, dateNumber, year);
     day = days[date.getDay()];
-    checkDay = days[today.getDay()];
     month = months[date.getMonth()];
     checkMonth = months[today.getMonth()];
     year = date.getFullYear();
     checkYear = today.getFullYear();
     dateNumber = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+    checkDate = today.getDate() < 10 ? `0${today.getDate()}` : today.getDate();
 
-    if ((day !== checkDay) && (month !== checkMonth) && (year !== checkYear)) {
+    console.log(dateNumber, checkDate);
+    console.log(month, checkMonth);
+    console.log(year, checkYear);
+
+    if (dateNumber !== checkDate || month !== checkMonth || year !== checkYear) {
         weatherQuery(coord.lat, coord.lon);
+    } else {
+        //modify weatherPreview with API content
+        weatherPreview.style.display = 'block';
+    
+        weatherPreview.innerHTML = `
+            <div class="right">
+                <p class="city__name">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>${name}</span>
+                    <sup class="country__name">${sys.country}</sup>
+                </p>
+                <div>
+                    <p class="date">${day}, ${month} ${dateNumber} ${year}</p>
+                </div>
+            </div>
+        `;
+    
+    
+        //modify weatherDescription with API content
+        weatherDescription.style.display = 'block';
+    
+        weatherDescription.innerHTML = `
+            <div class="left">
+                <div>
+                    <p class="temp">${Math.round(main.temp)}<sup>o</sup>C</p>
+                    <p class="max__min__temp">${Math.round(main['temp_max'])}<sup>o</sup>C/${Math.round(main['temp_min'])}<sup>o</sup>C</p>
+                </div>
+                <figure>
+                    <img class="weather__description__image"  src="https://openweathermap.org/img/wn/${weather[0].icon}@2x.png" alt="${weather[0].description}icon" height="150" width="150">
+                    <figcaption>
+                        <p class="weather__description__text">${weather[0].description}</p>
+                    </figcaption>
+                </figure>
+            </div>
+        `;
+        
+        //modify weatherDetails with API content
+        weatherDetails.style.display = 'block'
+    
+        weatherDetails.innerHTML= `
+            <div class="weather__detail">
+                <p>
+                <i class='wi wi-thermometer'></i>
+                    Feels like
+                </p>
+                <p>${Math.round(main['feels_like'])}<sup>o</sup>C</p>
+            </div>
+    
+            <div class="weather__detail">
+                <p>
+                    <i class='wi wi-humidity'></i>                      
+                    Humidity
+                </p>
+                <p>${main['humidity']}%</p>
+            </div>
+    
+            <div class="weather__detail">
+                <p>
+                <i class='wi wi-barometer'></i>
+                    Pressure
+                </p>
+                <p>${main['pressure']} hPa</p>
+            </div>
+    
+            <div class="weather__detail">
+                <p>
+                <i class='wi wi-strong-wind'></i>
+                    Wind Speed
+                </p>
+                <p>${wind.speed}m/s</p>
+            </div>
+    
+            <div class="weather__detail">
+                <p>Visibility</p>
+                <p>${visibility}</p>
+            </div>
+        `;
+        
+        search.value = '';
+
     }
 
-    //modify weatherPreview with API content
-    weatherPreview.style.display = 'block';
-
-    weatherPreview.innerHTML = `
-        <div class="right">
-            <p class="city__name">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>${name}</span>
-                <sup class="country__name">${sys.country}</sup>
-            </p>
-            <div>
-                <p class="date">${day}, ${month} ${dateNumber} ${year}</p>
-            </div>
-        </div>
-    `;
-
-
-    //modify weatherDescription with API content
-    weatherDescription.style.display = 'block';
-
-    weatherDescription.innerHTML = `
-        <div class="left">
-            <div>
-                <p class="temp">${Math.round(main.temp)}<sup>o</sup>C</p>
-                <p class="max__min__temp">${Math.round(main['temp_max'])}<sup>o</sup>C/${Math.round(main['temp_min'])}<sup>o</sup>C</p>
-            </div>
-            <figure>
-                <img class="weather__description__image"  src="https://openweathermap.org/img/wn/${weather[0].icon}@2x.png" alt="${weather[0].description}icon" height="150" width="150">
-                <figcaption>
-                    <p class="weather__description__text">${weather[0].description}</p>
-                </figcaption>
-            </figure>
-        </div>
-    `;
-    
-    //modify weatherDetails with API content
-    weatherDetails.style.display = 'block'
-
-    weatherDetails.innerHTML= `
-        <div class="weather__detail">
-            <p>
-            <i class='wi wi-thermometer'></i>
-                Feels like
-            </p>
-            <p>${Math.round(main['feels_like'])}<sup>o</sup>C</p>
-        </div>
-
-        <div class="weather__detail">
-            <p>
-                <i class='wi wi-humidity'></i>                      
-                Humidity
-            </p>
-            <p>${main['humidity']}%</p>
-        </div>
-
-        <div class="weather__detail">
-            <p>
-            <i class='wi wi-barometer'></i>
-                Pressure
-            </p>
-            <p>${main['pressure']} hPa</p>
-        </div>
-
-        <div class="weather__detail">
-            <p>
-            <i class='wi wi-strong-wind'></i>
-                Wind Speed
-            </p>
-            <p>${wind.speed}m/s</p>
-        </div>
-
-        <div class="weather__detail">
-            <p>Visibility</p>
-            <p>${visibility}</p>
-        </div>
-    `;
-    
-    search.value = '';
 }   
 
 //=============Filling Second Data===========//
@@ -136,7 +142,7 @@ const secondData = (weatherFromCoord) => {
     const {daily} = weatherFromCoord;
     let date1 = new Date(daily[0].dt * 1000);
     let date2 = new Date();
-    if ((date1.getDay() !== date2.getDay()) && (date1.getMonth() !== date2.getMonth()) && (date1.getFullYear() !== date2.getFullYear())) {
+    if ((date1.getDate() !== date2.getDate()) || (date1.getMonth() !== date2.getMonth()) || (date1.getFullYear() !== date2.getFullYear())) {
         null
     } else {
 
@@ -276,7 +282,9 @@ const weatherQuery = async(lat, lon) => {
 
 const searchEvent = () => {
 
-    if(localStorage.getItem('weatherReports') !== null && localStorage.getItem('localCoordinates') !== null) {
+    if(search.value === '') {
+        return null;
+    } else if(localStorage.getItem('weatherReports') !== null && localStorage.getItem('localCoordinates') !== null) {
         let localCoordinates = JSON.parse(localStorage.getItem('localCoordinates'));
 
         let weatherReports = JSON.parse(localStorage.getItem('weatherReports'));
