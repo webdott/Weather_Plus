@@ -46,10 +46,6 @@ const firstData = (weatherReport, weatherReports) => {
     dateNumber = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
     checkDate = today.getDate() < 10 ? `0${today.getDate()}` : today.getDate();
 
-    console.log(dateNumber, checkDate);
-    console.log(month, checkMonth);
-    console.log(year, checkYear);
-
     if (dateNumber !== checkDate || month !== checkMonth || year !== checkYear) {
         weatherQuery(coord.lat, coord.lon);
     } else {
